@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="bob">
+    <!-- Generate materials -->
+    <xacro:macro name="gen_mat" params="color_name r g b a">
+        <material name="${color_name}">
+            <color rgba="${r} ${g} ${b} ${a}" />
+        </material>
+    </xacro:macro>
+    <!-- Calculate intertial for basic shapes -->
+    <xacro:macro name="inertial_box" params="mass l w h *block">
+        <inertial>
+            <xacro:insert_block name="block" />
+            <mass value="${mass}" />
+            <inertia ixx="${1/12 * mass * (h*h + l*l)}" ixy="0" ixz="0.0"
+                iyy="${1/12 * mass * (l*l + w*w)}" iyz="0.0" izz="${1/12 * mass * (h*h + w*w)}" />
+        </inertial>
+    </xacro:macro>
+    <xacro:macro name="inertial_cylinder" params="mass r h *block">
+        <inertial>
+            <xacro:insert_block name="block" />
+            <mass value="${mass}" />
+            <inertia ixx="${1/12 * mass * (h*h + 3*r*r)}" ixy="0.0" ixz="0.0"
+                iyy="${1/12 * mass * (h*h + 3*r*r)}" iyz="0.0" izz="${1/12 * mass * (r * r)}" />
+        </inertial>
+    </xacro:macro>
+    <xacro:macro name="inertial_sphere" params="mass r *block">
+        <inertial>
+            <xacro:insert_block name="block" />
+            <mass value="${mass}" />
+            <inertia ixx="${2/5 * mass * r * r}" ixy="0.0" ixz="0.0" iyy="${2/5 * mass * r * r}" iyz="0.0"
+                izz="${2/5 * mass * r * r}" />
+        </inertial>
+    </xacro:macro>
+</robot>

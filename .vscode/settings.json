@@ -1,0 +1,18 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/lvquang/ros2_ws/build/warehouse_robot_spawner_pkg",
+        "/home/lvquang/ros2_ws/install/warehouse_robot_spawner_pkg/lib/python3.10/site-packages",
+        "/home/lvquang/ros2_ws/build/warehouse_robot_controller_pkg",
+        "/home/lvquang/ros2_ws/install/warehouse_robot_controller_pkg/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/lvquang/ros2_ws/build/warehouse_robot_spawner_pkg",
+        "/home/lvquang/ros2_ws/install/warehouse_robot_spawner_pkg/lib/python3.10/site-packages",
+        "/home/lvquang/ros2_ws/build/warehouse_robot_controller_pkg",
+        "/home/lvquang/ros2_ws/install/warehouse_robot_controller_pkg/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}

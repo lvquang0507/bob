@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="bob">
+
+    <xacro:include filename="general_macros.xacro"/>
+
+    <xacro:property name="box_w" value="0.3" />
+    <xacro:property name="box_l" value="0.3" />
+    <xacro:property name="box_h" value="0.15" />
+    <xacro:property name="wheel_r" value="0.05" />
+    <xacro:property name="wheel_l" value="0.04" />
+
+    <xacro:macro name="spawn_wheel" params="wheel_name ref">
+        <joint name="${wheel_name}_joint" type="continuous">
+            <parent link="base_link" />
+            <child link="${wheel_name}" />
+            <origin xyz="0 ${-ref * (box_l / 2)} 0" rpy="${ref * pi/2} 0.0 0.0" />
+            <axis xyz="0.0 0.0 ${-ref}" />
+        </joint>
+
+        <link name="${wheel_name}">
+            <visual>
+                <geometry>
+                    <cylinder radius="${wheel_r}" length="${wheel_l}" />
+                </geometry>
+                <material name="blue" />
+            </visual>
+            <collision>
+                <geometry>
+                    <cylinder radius="${wheel_r}" length="${wheel_l}" />
+                </geometry>
+            </collision>
+            <xacro:inertial_cylinder mass="0.1" r="${wheel_r}" h="${wheel_l}" >
+                <origin xyz="0.0 0.0 0.0"/>
+            </xacro:inertial_cylinder>
+        </link>
+    </xacro:macro>
+
+
+    <xacro:gen_mat color_name="red" r="1.0" g="0.0" b="0.0" a="1.0" />
+    <xacro:gen_mat color_name="green" r="0.0" g="1.0" b="0.0" a="1.0" />
+    <xacro:gen_mat color_name="blue" r="0.0" g="0.0" b="1.0" a="1.0" />
+    <xacro:gen_mat color_name="white" r="1.0" g="1.0" b="1.0" a="1.0" />
+
+    <link name="base_link">
+    </link>
+
+    <joint name="chassis_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="chassis" />
+        <origin xyz="-${(box_w - 0.1)/2} 0 0" rpy="0.0 0.0 0.0" />
+    </joint>
+
+    <link name="chassis">
+        <visual name="">
+            <origin xyz="${box_l/2} 0 ${box_h/2}" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${box_l} ${box_w} ${box_h}" />
+            </geometry>
+            <material name="white" />
+        </visual>
+        <collision>
+            <origin xyz="${box_l/2} 0 ${box_h/2}" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${box_l} ${box_w} ${box_h}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.4" h="${box_h}" w="${box_w}" l="${box_l}">
+            <origin xyz="${box_l/2} 0 ${box_h/2}" rpy="0.0 0.0 0.0" />
+        </xacro:inertial_box>
+    </link>
+
+    <xacro:spawn_wheel wheel_name="left_wheel" ref="-1" />
+    <xacro:spawn_wheel wheel_name="right_wheel" ref="1" />
+
+
+    <joint name="caster_wheel_joint" type="fixed">
+        <origin xyz="${box_l - 0.08} 0.0 0.0" rpy="0.0 0.0 0.0" />
+        <parent link="chassis" />
+        <child link="caster_wheel" />
+    </joint>
+
+    <link name="caster_wheel">
+        <visual>
+            <geometry>
+                <sphere radius="${wheel_r}" />
+            </geometry>
+            <material name="green" />
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="${wheel_r}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_sphere mass="0.1" r="${wheel_r}">
+            <origin xyz="0.0 0.0 0.0"/>
+        </xacro:inertial_sphere>
+    </link>
+</robot>
