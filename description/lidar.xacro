@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="bob">
+
+    <joint name="lidar_joint" type="fixed">
+        <parent link="chassis" />
+        <child link="lidar" />
+        <origin xyz="${box_l - 0.05} 0 ${box_h} " />
+    </joint>
+
+    <link name="lidar">
+        <visual>
+            <geometry>
+                <cylinder radius="${lidar_r}" length="${lidar_h}" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${lidar_r}" length="${lidar_h}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="0.2" r="${lidar_r}" h="${lidar_h}">
+            <origin xyz="0.0 0.0 0.0" />
+        </xacro:inertial_cylinder>
+    </link>
+    
+    <gazebo reference="lidar">
+        <material>
+            Gazebo/Green
+        </material>
+
+        <sensor type="ray" name="laser">
+            <pose>0 0 0 0 0 0</pose>   
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>360</samples>
+                        <resolution>1</resolution>
+                        <min_angle>-${pi}</min_angle>
+                        <max_angle>${pi}</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.3</min>
+                    <max>12</max>
+                    <resolution>0.01</resolution>
+                </range>
+            </ray>
+            <plugin name="lidar_controller" filename="libgazebo_ros_ray_sensor.so">
+                <ros>
+                    <argument>--ros-args</argument>
+                    <argument>--remap</argument>
+                    <argument>~/out:=scan</argument>
+                </ros>
+                <output_type>sensor_msgs/LaserScan</output_type>
+                <frame_name>lidar</frame_name>
+            </plugin>
+        </sensor>
+
+    </gazebo>
+
+
+</robot>
