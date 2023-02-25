@@ -4,7 +4,7 @@
     <joint name="lidar_joint" type="fixed">
         <parent link="chassis" />
         <child link="lidar" />
-        <origin xyz="${box_l - 0.05} 0 ${box_h} " />
+        <origin xyz="${box_l - 0.08} 0 ${box_h} " />
     </joint>
 
     <link name="lidar">
@@ -30,7 +30,7 @@
 
         <sensor type="ray" name="laser">
             <pose>0 0 0 0 0 0</pose>   
-            <visualize>true</visualize>
+            <visualize>false</visualize>
             <update_rate>10</update_rate>
             <ray>
                 <scan>
