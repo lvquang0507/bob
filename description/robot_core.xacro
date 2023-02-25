@@ -1,6 +1,37 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="bob">
 
+    <!-- Materials -->
+    <xacro:gen_mat color_name="red" r="1.0" g="0.0" b="0.0" a="1.0" />
+    <xacro:gen_mat color_name="green" r="0.0" g="1.0" b="0.0" a="1.0" />
+    <xacro:gen_mat color_name="blue" r="0.0" g="0.0" b="1.0" a="1.0" />
+    <xacro:gen_mat color_name="white" r="1.0" g="1.0" b="1.0" a="1.0" />
+    <xacro:gen_mat color_name="pink" r="0.9" g="0.5" b="1.0" a="1.0" />
+
+    <!--Gazebo Materials -->
+    <gazebo reference="chassis">
+        <material>
+            Gazebo/White
+        </material>
+    </gazebo>
+    <gazebo reference="left_wheel">
+        <material>
+            Gazebo/Blue
+        </material>
+    </gazebo>
+    <gazebo reference="right_wheel">
+        <material>
+            Gazebo/Blue
+        </material>
+    </gazebo>
+    <gazebo reference="caster_wheel">
+        <material>
+            Gazebo/Green
+        </material>
+        <mu1 value="0.001" />
+        <mu2 value="0.001" />
+    </gazebo>
+
     <xacro:macro name="spawn_wheel" params="wheel_name ref">
         <joint name="${wheel_name}_joint" type="continuous">
             <parent link="base_link" />
@@ -26,36 +57,6 @@
             </xacro:inertial_cylinder>
         </link>
     </xacro:macro>
-
-
-    <gazebo reference="chassis">
-        <material>
-            Gazebo/White
-        </material>
-    </gazebo>
-    <gazebo reference="left_wheel">
-        <material>
-            Gazebo/Blue
-        </material>
-    </gazebo>
-    <gazebo reference="right_wheel">
-        <material>
-            Gazebo/Blue
-        </material>
-    </gazebo>
-    <gazebo reference="caster_wheel">
-        <material>
-            Gazebo/Green
-        </material>
-        <mu1 value="0.001" />
-        <mu2 value="0.001" />
-    </gazebo>
-
-    <xacro:gen_mat color_name="red" r="1.0" g="0.0" b="0.0" a="1.0" />
-    <xacro:gen_mat color_name="green" r="0.0" g="1.0" b="0.0" a="1.0" />
-    <xacro:gen_mat color_name="blue" r="0.0" g="0.0" b="1.0" a="1.0" />
-    <xacro:gen_mat color_name="white" r="1.0" g="1.0" b="1.0" a="1.0" />
-
 
     <link name="base_link">
     </link>
