@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="bob">
+    <joint name="camera_joint" type="fixed">
+        <parent link="chassis" />
+        <child link="camera_frame" />
+        <origin xyz="${box_l} 0.0 ${box_h - 0.05}" />
+    </joint>
+
+    <joint name="camera_optical_joint" type="fixed">
+        <parent link="camera_frame" />
+        <child link="camera_link_optical" />
+        <origin rpy="${-pi/2} 0 ${-pi/2}"/>
+    </joint>
+
+    <link name="camera_link_optical">
+    </link>
+
+    <link name="camera_frame">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 ${pi/2} 0.0" />
+            <geometry>
+                <box size="${camera_l} ${camera_w} ${camera_h}" />
+            </geometry>
+            <material name="pink" />
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <geometry>
+                <box size="${camera_l} ${camera_w} ${camera_h}" />
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.3" h="${camera_h}" l="${camera_l}" w="${camera_w}">
+            <origin xyz="0.0 0.0 0.0" />
+        </xacro:inertial_box>
+    </link>
+
+
+    <gazebo reference="camera_frame">
+        <material>
+           Gazebo/Purple
+        </material>
+
+        <sensor type="camera" name="main_camera">
+            <update_rate>30</update_rate>
+            <visualize>true</visualize>
+            <camera name="head">
+                <horizontal_fov>${pi/2}</horizontal_fov>
+                <image>
+                    <width>800</width>
+                    <height>800</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.02</near>
+                    <far>200</far>
+                </clip>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <alwaysOn>true</alwaysOn>
+                <updateRate>0</updateRate>
+                <cameraName>bob/main_camera</cameraName>
+                <imageTopicName>image_raw</imageTopicName>
+                <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                <frameName>camera_link_optical</frameName>
+                <hackBaseline>0.07</hackBaseline>
+                <distortionK1>0.0</distortionK1>
+                <distortionK2>0.0</distortionK2>
+                <distortionK3>0.0</distortionK3>
+                <distortionT1>0.0</distortionT1>
+                <distortionT2>0.0</distortionT2>
+            </plugin>
+        </sensor>
+
+
+    </gazebo>
+
+</robot>
