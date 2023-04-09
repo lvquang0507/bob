@@ -8,7 +8,8 @@
     <xacro:gen_mat color_name="white" r="1.0" g="1.0" b="1.0" a="1.0" />
     <xacro:gen_mat color_name="pink" r="0.9" g="0.5" b="1.0" a="1.0" />
 
-    <!--Gazebo Materials -->
+    <!--Gazebo
+    Materials -->
     <gazebo reference="chassis">
         <material>
             Gazebo/White
@@ -60,7 +61,13 @@
 
     <link name="base_link">
     </link>
+    <link name="base_footprint">
+    </link>
 
+    <joint name="base_footprint_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="base_footprint" />
+    </joint>
 
     <joint name="chassis_joint" type="fixed">
         <parent link="base_link" />
